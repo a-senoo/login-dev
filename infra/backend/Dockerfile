@@ -37,14 +37,18 @@ RUN apt-get update && apt-get install -y curl gnupg && \
     curl -fsSL https://deb.nodesource.com/setup_18.x | bash - && \
     apt-get install -y nodejs
 
-# Copy the Go module files to the working directory
-COPY go.mod go.sum ./
-# Set the environment variable to disable CGO
-RUN go mod download
+# Set environment variables
+ENV APP_HOME=/work/backend \
+    CGO_ENABLED=0
 
-# Set the working directory inside the container
-ENV APP_HOME /work/backend
+# Set working directory before any file copying
 WORKDIR $APP_HOME
+
+# Copy Go module files into the working directory
+COPY go.mod go.sum ./
+
+# Download Go module dependencies
+RUN go mod download
 
 # Download the Go module dependencies
 COPY . .
