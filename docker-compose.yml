@@ -1,0 +1,26 @@
+services:
+  login-dev:
+    container_name: login-dev
+    build:
+      context: .
+      dockerfile: ./infra/backend/Dockerfile
+    volumes:
+      - .:/work/backend
+    ports:
+      - "8080:8080"
+    networks:
+      - default
+  mysql:
+    image: 'mysql/mysql-server:8.0'
+    container_name: login-dev-db
+    environment:
+      MYSQL_ROOT_PASSWORD: 'password'
+      MYSQL_DATABASE: 'login_dev'
+      MYSQL_USER: 'root'
+      MYSQL_PASSWORD: 'password'
+    ports:
+      - '13306:3306'
+    networks:
+      - default
+    volumes:
+      - ./infra/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
