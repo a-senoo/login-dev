@@ -1,0 +1,30 @@
+name: local-workflow
+
+on: 
+  pull_request:
+    branches:
+      - develop
+    paths:
+      - 'login-dev/**'
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set Up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version: '1.24'
+
+      - name: Install Go dependencies
+        run: go get ./...
+
+      - name: Build
+        run: go build -v ./...
+
+      - name: Test
+        run: go test -v ./...
