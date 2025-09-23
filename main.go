@@ -7,7 +7,7 @@ import (
 
 func main() {
 	http.HandleFunc("/", func(w http.ResponseWriter, r *http.Request) {
-		fmt.Fprintln(w, "Hello from Go inside Docker!")
+		fmt.Fprintln(w, "Hello World!")
 	})
 
 	port := "8080"
