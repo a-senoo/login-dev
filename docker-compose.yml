@@ -24,3 +24,10 @@ services:
       - default
     volumes:
       - ./infra/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+  redis:
+    image: 'redis:8.0.5-alpine'
+    container_name: login-dev-redis
+    ports:
+      - '16379:6379'
+    networks:
+      - default
